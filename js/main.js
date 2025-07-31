@@ -8,7 +8,15 @@ const alertValidacionesTexto=document.getElementById("alertValidacionesTexto");
 const tablaListaCompras=document.getElementById("tablaListaCompras");
 const cuerpoTabla=document.getElementsByTagName("tbody").item(0);
 
+const contadorProductos = document.getElementById("contadorProductos");
+const productosTotal1 = document.getElementById("productosTotal");
+const precioTotal = document.getElementById("precioTotal");
+
+
 let cont = 0;
+let costoTotal = 0;
+let totalProductos = 0;
+
 
 function validarCantidad(){
     if(txtNumber.value==0){
@@ -71,6 +79,15 @@ btnAgregar.addEventListener("click", function(event){
             </tr>
     `;
     cuerpoTabla.insertAdjacentHTML("beforeend",row);
+    contadorProductos.innerText=cont;
+    totalProductos += Number(txtNumber.value);
+    productosTotal1.innerText = totalProductos;
+    costoTotal += precio * Number(txtNumber.value);
+    //costoTotal.toFixeed(2).  forma facil
+    precioTotal.innerText = new Intl.NumberFormat("es-MX", 
+                  { style: "currency", currency: "MXN" }).format(costoTotal);
+
+
     txtName.value = "";
     txtNumber.value = "";//elimina valor insertado despues de ser agregado item
     txtName.focus();
