@@ -17,6 +17,9 @@ let cont = 0;
 let costoTotal = 0;
 let totalProductos = 0;
 
+let datos = new Array();//constructor del objeto para mostrar memoria local
+
+
 
 function validarCantidad(){
     if(txtNumber.value==0){
@@ -78,6 +81,16 @@ btnAgregar.addEventListener("click", function(event){
                 <td>${precio}</td>
             </tr>
     `;
+
+    let elemento = {
+        "cont" : cont,
+        "nombre" : txtName.value,
+        "precio" : precio,
+    }; //elemento para hacer arreglo
+
+    datos.push(elemento);//sube datos al final del arreglo //metodo rápido conejo igual que pop
+    localStorage.setItem("datos", JSON.stringify(datos));//se pasa un objeto a string para ser usado en localStorage
+
     cuerpoTabla.insertAdjacentHTML("beforeend",row);
     contadorProductos.innerText=cont;
     totalProductos += Number(txtNumber.value);
@@ -86,6 +99,13 @@ btnAgregar.addEventListener("click", function(event){
     //costoTotal.toFixeed(2).  forma facil
     precioTotal.innerText = new Intl.NumberFormat("es-MX", 
                   { style: "currency", currency: "MXN" }).format(costoTotal);
+
+    let resumen = {
+        "cont" : cont,
+        "totalProductos" : totalProductos,
+        "costoTotal" : costoTotal,
+    };
+    localStorage.setItem("resumen", JSON.stringify(resumen));
 
 
     txtName.value = "";
